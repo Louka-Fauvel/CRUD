@@ -41,7 +41,7 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
 
 require_once('close.php');
 
-getHeader('Modifier une organisation','bg-secondary rounded-bottom');
+getHeader('Modifier une organisation','CRUD Organisations','bg-secondary rounded-bottom');
 echo "<form method='post'>
       <div class='form-group'>
             <label for='name'>Nom</label>";

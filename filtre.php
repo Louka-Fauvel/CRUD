@@ -2,7 +2,7 @@
 require_once('connect.php');
 include "functions.php";
 
-getHeader('Liste des organisations','bg-light');
+getHeader('Liste des organisations','CRUD Organisations','bg-light');
 
 $visible='visible';
 
@@ -16,6 +16,9 @@ if(isset($_POST['chaine'])){
   $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
   echo "<a class='btn btn-outline-info mb-2' href='filtre.php'>Retour</a>
+      <a class='btn btn-outline-secondary mb-2' href='user/user.php'>Liste des utilisateurs</a>
+      <a class='btn btn-outline-primary mb-2' href='add.php'>Ajouter</a>
+      <a class='btn btn-outline-info mb-2' href='filtre.php'>Filtrer la liste</a>
       <table class='table table-striped'>
       <thead class='table-dark'>
               <th>Nom</th>
@@ -38,11 +41,7 @@ if(isset($_POST['chaine'])){
   }
 
   echo "</tbody>
-  </table>
-  <br>
-  <a class='btn btn-outline-primary mb-2' href='add.php'>Ajouter</a>
-  <br>
-  <a class='btn btn-outline-info mb-2' href='filtre.php'>Filtrer la liste</a>";
+  </table>";
 }
 
 echo "<br><br>

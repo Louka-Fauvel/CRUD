@@ -31,7 +31,7 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
 
 require_once('close.php');
 $titre="Détails des organisations : ".$orga['name'];
-getHeader($titre,'bg-light');
+getHeader($titre,'CRUD Organisations','bg-light');
 
 /*echo "<p>ID : ".$orga['id']."</p>";
 echo "<p>Nom : ".$orga['name']."</p>";

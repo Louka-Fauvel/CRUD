@@ -23,7 +23,7 @@ if(isset($_POST)){
 
 require_once('close.php');
 
-getHeader('Ajout d\'une organisation','bg-secondary rounded-bottom');
+getHeader('Ajout d\'une organisation','CRUD Organisations','bg-secondary rounded-bottom');
 
 echo "<form method='post'>
     <div class='form-group'>
