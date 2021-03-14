@@ -2,25 +2,36 @@
 require_once('../connect.php');
 include "../functions.php";
 
+$listorgasql = "SELECT id, name FROM organization";
+
+$listquery = $db->prepare($listorgasql);
+
+$listquery->execute();
+
+$listorga = $listquery->fetchAll(PDO::FETCH_ASSOC);
+
 if(isset($_POST)){
     if(isset($_POST['id']) && !empty($_POST['id'])
         && isset($_POST['firstname']) && !empty($_POST['firstname'])
         && isset($_POST['lastname']) && !empty($_POST['lastname'])
         && isset($_POST['email']) && !empty($_POST['email'])
         && isset($_POST['password']) && !empty($_POST['password'])
-        && isset($_POST['idOrganization']) && !empty($_POST['idOrganization'])){
+        && isset($_POST['Organization']) && !empty($_POST['Organization'])){
         $id = strip_tags($_GET['id']);
         $prenom = strip_tags($_POST['firstname']);
         $nom = strip_tags($_POST['lastname']);
         $email = strip_tags($_POST['email']);
         $mdp = strip_tags($_POST['password']);
-        $idOrganization = strip_tags($_POST['idOrganization']);
+        for ($i= 0; $i < count($listorga); $i++){
+          if ($_POST['Organization'] == $listorga[$i]['name']){
+            $idOrganization = $listorga[$i]['id'];
+          }}
 
         $sql = "UPDATE user SET firstname=:firstname, lastname=:lastname, email=:email, password=:password, idOrganization=:idOrganization WHERE id=:id;";
 
         $query = $db->prepare($sql);
 
-        $query->bindValue(':firstname', $prénom, PDO::PARAM_STR);
+        $query->bindValue(':firstname', $prenom, PDO::PARAM_STR);
         $query->bindValue(':lastname', $nom, PDO::PARAM_STR);
         $query->bindValue(':email', $email, PDO::PARAM_STR);
         $query->bindValue(':password', $mdp, PDO::PARAM_STR);
@@ -35,7 +46,7 @@ if(isset($_POST)){
 
 if(isset($_GET['id']) && !empty($_GET['id'])){
     $id = strip_tags($_GET['id']);
-    $sql = "SELECT * FROM user WHERE id=:id;";
+    $sql = "SELECT user.id, user.firstname, user.lastname, user.email, user.password, user.suspended, organization.name FROM user INNER JOIN organization ON user.idOrganization = organization.id WHERE user.id =:id ORDER BY firstname";
 
     $query = $db->prepare($sql);
 
@@ -66,12 +77,33 @@ echo "      <input class='form-control' type='text' name='email' id='email' valu
 echo "      <input class='form-control' type='text' name='password' id='password' value='".$result['password']."'>
       </div>
       <div class='form-group'>
-            <label for='idOrganization'>IdOrganization</label>";
-echo "      <input class='form-control' type='text' name='idOrganization' id='idOrganization' value='".$result['idOrganization']."'>
-      </div>
-      <div class='form-group'>
+            <label for='suspended'>Suspended</label>";
+echo "      <input class='form-control' type='text' name='suspended' id='suspended' value='".$result['suspended']."'>
+      </div>";
+
+
+
+echo "<div class='form-group'>
+            <label for='Organization'>Organization</label>
+            <select class='form-control' name='Organization' id='Organization'>
+            <option value=''>".$result['name']."</option>";
+for ($i = 0; $i < count($listorga); $i++){
+  if ($listorga[$i]['name'] != $result['name']){
+  echo "		<option value='".$listorga[$i]['name']."'>".$listorga[$i]['name']."</option>";
+}}
+  echo "    </select>
+      </div>";
+
+/*      echo "<div class='form-group'>
+                  <label for='Organization'>Organization</label>
+                  <input class='form-control' type='text' name='Organization' id='Organization' value='".$result['name']."'>
+            </div>";*/
+
+echo "      <div class='form-group'>
             <button class='btn btn-dark mb-2'>Enregistrer</button>
       </div>";
+
+
 echo "  <input type='hidden' name='id' value='".$result['id']."'>
     </form>
     <a class='btn btn-info mb-2' href='user.php'>Retour</a>

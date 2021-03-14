@@ -7,9 +7,10 @@ include "../functions.php";
 
 if(isset($_GET['id']) && !empty($_GET['id'])){
     $id = strip_tags($_GET['id']);
-    // On écrit notre requête
-    $sql = 'SELECT * FROM user WHERE id=:id';
-    // On prépare la requête
+    // On écrit notre requête SELECT * FROM user WHERE id=:id
+    $sql = 'SELECT user.id, user.firstname, user.lastname, user.email, user.password, user.suspended, organization.name FROM user INNER JOIN organization ON user.idOrganization = organization.id WHERE user.id =:id ORDER BY firstname';
+    // SELECT user.firstname, organization.name FROM user INNER JOIN organization ON user.idOrganization = organization.id WHERE user.idOrganization = 2 ORDER BY firstname
+    // On prépare la requête    SELECT * FROM user INNER JOIN organization ON idOrganization = :id        SELECT `user.firstname`, `organization.name` FROM user INNER JOIN organization ON `user.idOrganization` = `organization.id` WHERE id=:id
     $query = $db->prepare($sql);
 
     // On attache les valeurs
@@ -19,9 +20,9 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
     $query->execute();
 
     // On stocke le résultat dans un tableau associatif
-    $orga = $query->fetch();
+    $result = $query->fetch();
 
-    if(!$orga){
+    if(!$result){
         //header('Location: index.php');
     }
 }else{
@@ -29,42 +30,34 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
 }
 
 require_once('../close.php');
-$titre="Détails de l'utilisateur : ".$orga['firstname'];
+$titre="Détails de l'utilisateur : ".$result['firstname'] ." ".$result['lastname'];
 getHeader($titre,'CRUD utilisateurs','bg-light');
-
-/*echo "<p>ID : ".$orga['id']."</p>";
-echo "<p>Nom : ".$orga['name']."</p>";
-echo "<p>Domaine : ".$orga['domain']."</p>";
-echo "<p>Alias : ".$orga['aliases']."</p>";
-echo "<p><a class='btn btn-outline-info mb-2' href='index.php'>Retour</a>";
-   echo "<a class='btn btn-outline-dark mb-2' href='edit.php?id=".$orga['id']."'>Modifier</a>";
-   echo "<a class='btn btn-outline-danger mb-2' href='delete.php?id=".$orga['id']."'>Supprimer</a></p>";*/
-
 
    echo "
        <table class='table table-striped'>
        <thead class='table-dark'>
+               <th>ID</th>
                <th>Prénom</th>
                <th>Nom</th>
                <th>Email</th>
                <th>Mot de passe</th>
-               <th>IdOrganization</th>
-               <th>ID</th>
+               <th>Suspended</th>
+               <th>Organization</th>
                <th></th>
        </thead>
            <tbody>";
              echo "<tr>
-
-                       <td>".$orga['firstname']."</td>
-                       <td>".$orga['lastname']."</td>
-                       <td>".$orga['email']."</td>
-                       <td>".$orga['password']."</td>
-                       <td>".$orga['idOrganization']."</td>
-                       <td>".$orga['id']."</td>
+                       <td>".$result['id']."</td>
+                       <td>".$result['firstname']."</td>
+                       <td>".$result['lastname']."</td>
+                       <td>".$result['email']."</td>
+                       <td>".$result['password']."</td>
+                       <td>".$result['suspended']."</td>
+                       <td>".$result['name']."</td>
 
                        <td><a class='btn btn-outline-info mb-2' href='user.php'>Retour</a>
-                           <a class='btn btn-outline-dark mb-2' href='edit.php?id=".$orga['id']."'>Modifier</a>
-                           <a class='btn btn-outline-danger mb-2' href='delete.php?id=".$orga['id']."'>Supprimer</a></td>
+                           <a class='btn btn-outline-dark mb-2' href='edit.php?id=".$result['id']."'>Modifier</a>
+                           <a class='btn btn-outline-danger mb-2' href='delete.php?id=".$result['id']."'>Supprimer</a></td>
 
                    </tr>";
          echo "</tbody>

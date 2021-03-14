@@ -22,19 +22,20 @@ echo "<a class='btn btn-outline-secondary mb-2' href='../index.php'>Liste des or
     <table class='table table-striped'>
     <thead class='table-dark'>
             <th>Prénom</th>
+            <th>Nom</th>
             <th></th>
     </thead>
         <tbody>";
 
-            foreach($result as $orga){
+            foreach($result as $utilisateur){
 
           echo "<tr>
 
-                    <td>".$orga['firstname']."</td>
-
-                    <td><a class='btn btn-outline-secondary mb-2' href='details.php?id=".$orga['id']."'>Voir</a>
-                        <a class='btn btn-outline-dark mb-2' href='edit.php?id=".$orga['id']."'>Modifier</a>
-                        <a class='btn btn-outline-danger mb-2' href='delete.php?id=".$orga['id']."'>Supprimer</a></td>
+                    <td>".$utilisateur['firstname']."</td>
+                    <td>".$utilisateur['lastname']."</td>
+                    <td><a class='btn btn-outline-secondary mb-2' href='details.php?id=".$utilisateur['id']."'>Voir</a>
+                        <a class='btn btn-outline-dark mb-2' href='edit.php?id=".$utilisateur['id']."'>Modifier</a>
+                        <a class='btn btn-outline-danger mb-2' href='delete.php?id=".$utilisateur['id']."'>Supprimer</a></td>
 
                 </tr>";
 
