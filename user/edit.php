@@ -22,12 +22,13 @@ if(isset($_POST)){
         $nom = strip_tags($_POST['lastname']);
         $email = strip_tags($_POST['email']);
         $mdp = strip_tags($_POST['password']);
+        $suspended = strip_tags($_POST['suspended']);
         for ($i= 0; $i < count($listorga); $i++){
           if ($_POST['Organization'] == $listorga[$i]['name']){
             $idOrganization = $listorga[$i]['id'];
           }}
 
-        $sql = "UPDATE user SET firstname=:firstname, lastname=:lastname, email=:email, password=:password, idOrganization=:idOrganization WHERE id=:id;";
+        $sql = "UPDATE user SET firstname=:firstname, lastname=:lastname, email=:email, password=:password, suspended=:suspended, idOrganization=:idOrganization WHERE id=:id;";
 
         $query = $db->prepare($sql);
 
@@ -35,6 +36,7 @@ if(isset($_POST)){
         $query->bindValue(':lastname', $nom, PDO::PARAM_STR);
         $query->bindValue(':email', $email, PDO::PARAM_STR);
         $query->bindValue(':password', $mdp, PDO::PARAM_STR);
+        $query->bindValue(':suspended', $suspended, PDO::PARAM_STR);
         $query->bindValue(':idOrganization', $idOrganization, PDO::PARAM_STR);
         $query->bindValue(':id', $id, PDO::PARAM_INT);
 
@@ -86,7 +88,7 @@ echo "      <input class='form-control' type='text' name='suspended' id='suspend
 echo "<div class='form-group'>
             <label for='Organization'>Organization</label>
             <select class='form-control' name='Organization' id='Organization'>
-            <option value=''>".$result['name']."</option>";
+            <option value='".$result['name']."'>".$result['name']."</option>";
 for ($i = 0; $i < count($listorga); $i++){
   if ($listorga[$i]['name'] != $result['name']){
   echo "		<option value='".$listorga[$i]['name']."'>".$listorga[$i]['name']."</option>";
