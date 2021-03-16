@@ -33,15 +33,6 @@ require_once('close.php');
 $titre="Détails des organisations : ".$orga['name'];
 getHeader($titre,'CRUD Organisations','bg-light');
 
-/*echo "<p>ID : ".$orga['id']."</p>";
-echo "<p>Nom : ".$orga['name']."</p>";
-echo "<p>Domaine : ".$orga['domain']."</p>";
-echo "<p>Alias : ".$orga['aliases']."</p>";
-echo "<p><a class='btn btn-outline-info mb-2' href='index.php'>Retour</a>";
-   echo "<a class='btn btn-outline-dark mb-2' href='edit.php?id=".$orga['id']."'>Modifier</a>";
-   echo "<a class='btn btn-outline-danger mb-2' href='delete.php?id=".$orga['id']."'>Supprimer</a></p>";*/
-
-
    echo "
        <table class='table table-striped'>
        <thead class='table-dark'>

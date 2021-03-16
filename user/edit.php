@@ -82,9 +82,6 @@ echo "      <input class='form-control' type='text' name='password' id='password
             <label for='suspended'>Suspended</label>";
 echo "      <input class='form-control' type='text' name='suspended' id='suspended' value='".$result['suspended']."'>
       </div>";
-
-
-
 echo "<div class='form-group'>
             <label for='Organization'>Organization</label>
             <select class='form-control' name='Organization' id='Organization'>
@@ -95,17 +92,9 @@ for ($i = 0; $i < count($listorga); $i++){
 }}
   echo "    </select>
       </div>";
-
-/*      echo "<div class='form-group'>
-                  <label for='Organization'>Organization</label>
-                  <input class='form-control' type='text' name='Organization' id='Organization' value='".$result['name']."'>
-            </div>";*/
-
 echo "      <div class='form-group'>
             <button class='btn btn-dark mb-2'>Enregistrer</button>
       </div>";
-
-
 echo "  <input type='hidden' name='id' value='".$result['id']."'>
     </form>
     <a class='btn btn-info mb-2' href='user.php'>Retour</a>

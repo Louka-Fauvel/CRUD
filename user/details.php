@@ -7,10 +7,9 @@ include "../functions.php";
 
 if(isset($_GET['id']) && !empty($_GET['id'])){
     $id = strip_tags($_GET['id']);
-    // On écrit notre requête SELECT * FROM user WHERE id=:id
+    // On écrit notre requête
     $sql = 'SELECT user.id, user.firstname, user.lastname, user.email, user.password, user.suspended, organization.name FROM user INNER JOIN organization ON user.idOrganization = organization.id WHERE user.id =:id ORDER BY firstname';
-    // SELECT user.firstname, organization.name FROM user INNER JOIN organization ON user.idOrganization = organization.id WHERE user.idOrganization = 2 ORDER BY firstname
-    // On prépare la requête    SELECT * FROM user INNER JOIN organization ON idOrganization = :id        SELECT `user.firstname`, `organization.name` FROM user INNER JOIN organization ON `user.idOrganization` = `organization.id` WHERE id=:id
+    // On prépare la requête
     $query = $db->prepare($sql);
 
     // On attache les valeurs
